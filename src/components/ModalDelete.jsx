@@ -3,11 +3,8 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-function ModalCreate() {
-    const [data, setData] = useState({
-        Name: "",
-        Day: 0
-    });
+function ModalDelete({id}) {
+
 
 
     const [show, setShow] = useState(false);
@@ -15,19 +12,11 @@ function ModalCreate() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        const parsedValue = name === "Day" ? parseInt(value, 10) : value //convert the int
-        setData((prevState) => ({
-          ...prevState,
-          [name]: parsedValue,
-        }));
-      };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         axios
-          .post("https://gofiber-production.up.railway.app/api/v1/month/create", data)
+          .delete("https://gofiber-production.up.railway.app/api/v1/month/delete/"+id)
           .then(() => {
             alert("berhasil")
             handleClose()
@@ -38,20 +27,17 @@ function ModalCreate() {
 
     return (
         <>
-            <Button variant="primary" onClick={handleShow}>
-                Create Month
+            <Button variant="danger" onClick={handleShow}>
+                Delete Month
             </Button>
 
             <Modal show={show} onHide={handleClose}>
                 <form onSubmit={handleSubmit}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Create</Modal.Title>
+                        <Modal.Title>Delete</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <p>Name :</p>
-                        <input type="text" name="Name" onChange={handleChange} />
-                        <p>Day :</p>
-                        <input type="number" name="Day" onChange={handleChange} />
+                        <p>Apakah anda yakin ingin mengapus data</p>
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={handleClose}>
@@ -66,4 +52,4 @@ function ModalCreate() {
     );
 }
 
-export default ModalCreate;
+export default ModalDelete;

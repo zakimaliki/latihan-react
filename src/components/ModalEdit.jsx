@@ -3,10 +3,10 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-function ModalCreate() {
+function ModalEdit({Name,Day,id}) {
     const [data, setData] = useState({
-        Name: "",
-        Day: 0
+        Name,
+        Day
     });
 
 
@@ -27,7 +27,7 @@ function ModalCreate() {
     const handleSubmit = (e) => {
         e.preventDefault();
         axios
-          .post("https://gofiber-production.up.railway.app/api/v1/month/create", data)
+          .put("https://gofiber-production.up.railway.app/api/v1/month/update/"+id, data)
           .then(() => {
             alert("berhasil")
             handleClose()
@@ -38,20 +38,20 @@ function ModalCreate() {
 
     return (
         <>
-            <Button variant="primary" onClick={handleShow}>
-                Create Month
+            <Button variant="success" onClick={handleShow}>
+                Edit Month
             </Button>
 
             <Modal show={show} onHide={handleClose}>
                 <form onSubmit={handleSubmit}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Create</Modal.Title>
+                        <Modal.Title>Edit</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <p>Name :</p>
-                        <input type="text" name="Name" onChange={handleChange} />
+                        <input type="text" name="Name" value={data.Name} onChange={handleChange} />
                         <p>Day :</p>
-                        <input type="number" name="Day" onChange={handleChange} />
+                        <input type="number" name="Day" value={data.Day} onChange={handleChange} />
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={handleClose}>
@@ -66,4 +66,4 @@ function ModalCreate() {
     );
 }
 
-export default ModalCreate;
+export default ModalEdit;
