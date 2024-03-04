@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import ModalCreate from '../components/ModalCreate'
 import ModalEdit from '../components/ModalEdit'
 import ModalDelete from '../components/ModalDelete'
+import { Link } from 'react-router-dom'
 
 
 const Product = () => {
@@ -36,8 +37,9 @@ const Product = () => {
                             <td>{item.Name}</td>
                             <td>{item.Day}</td>
                             <td>
-                                <ModalEdit Name={item.Name} Day={item.Day} id={item.ID}/>
-                                <ModalDelete id={item.ID}/>
+                                <Link to={`product/${item.ID}`}>Detail</Link>
+                                <ModalEdit Name={item.Name} Day={item.Day} id={item.ID} />
+                                <ModalDelete id={item.ID} />
                             </td>
                         </tr>
                     ))}

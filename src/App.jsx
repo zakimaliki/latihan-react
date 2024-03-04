@@ -1,4 +1,5 @@
-import Product from './pages/Product';
+import Router from "./config/router/Router";
+
 
 
 
@@ -6,7 +7,7 @@ function App() {
 
   return (
     <div>
-      <Product />
+      <Router />
     </div>
   );
 }

@@ -27,7 +27,7 @@ function ModalEdit({Name,Day,id}) {
     const handleSubmit = (e) => {
         e.preventDefault();
         axios
-          .put("https://gofiber-production.up.railway.app/api/v1/month/update/"+id, data)
+          .put(`https://gofiber-production.up.railway.app/api/v1/month/update/${id}`, data)
           .then(() => {
             alert("berhasil")
             handleClose()

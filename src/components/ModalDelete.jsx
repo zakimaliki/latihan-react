@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-function ModalDelete({id}) {
+function ModalDelete({ id }) {
 
 
 
@@ -16,14 +16,14 @@ function ModalDelete({id}) {
     const handleSubmit = (e) => {
         e.preventDefault();
         axios
-          .delete("https://gofiber-production.up.railway.app/api/v1/month/delete/"+id)
-          .then(() => {
-            alert("berhasil")
-            handleClose()
-            window.location.reload();
-          })
-          .catch((error) => console.log(error));
-      };
+            .delete(`https://gofiber-production.up.railway.app/api/v1/month/delete/${id}`)
+            .then(() => {
+                alert("berhasil")
+                handleClose()
+                window.location.reload();
+            })
+            .catch((error) => console.log(error));
+    };
 
     return (
         <>
