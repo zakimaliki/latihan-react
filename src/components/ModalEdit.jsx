@@ -2,13 +2,15 @@ import axios from 'axios';
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { useDispatch } from 'react-redux';
+import updateMonth from '../config/redux/action/updateMonthAction';
 
-function ModalEdit({Name,Day,id}) {
+function ModalEdit({ Name, Day, id }) {
     const [data, setData] = useState({
         Name,
         Day
     });
-
+    const dispatch = useDispatch()
 
     const [show, setShow] = useState(false);
 
@@ -19,22 +21,15 @@ function ModalEdit({Name,Day,id}) {
         const { name, value } = e.target;
         const parsedValue = name === "Day" ? parseInt(value, 10) : value //convert the int
         setData((prevState) => ({
-          ...prevState,
-          [name]: parsedValue,
+            ...prevState,
+            [name]: parsedValue,
         }));
-      };
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios
-          .put(`https://gofiber-production.up.railway.app/api/v1/month/update/${id}`, data)
-          .then(() => {
-            alert("berhasil")
-            handleClose()
-            window.location.reload();
-          })
-          .catch((error) => console.log(error));
-      };
+        dispatch(updateMonth(id, data, setShow))
+    };
 
     return (
         <>

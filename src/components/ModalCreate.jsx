@@ -2,6 +2,8 @@ import axios from 'axios';
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { useDispatch } from 'react-redux';
+import createMonth from '../config/redux/action/createMonthAction';
 
 function ModalCreate() {
     const [data, setData] = useState({
@@ -9,7 +11,7 @@ function ModalCreate() {
         Day: 0
     });
 
-
+    const dispatch = useDispatch()
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -19,22 +21,15 @@ function ModalCreate() {
         const { name, value } = e.target;
         const parsedValue = name === "Day" ? parseInt(value, 10) : value //convert the int
         setData((prevState) => ({
-          ...prevState,
-          [name]: parsedValue,
+            ...prevState,
+            [name]: parsedValue,
         }));
-      };
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios
-          .post("https://gofiber-production.up.railway.app/api/v1/month/create", data)
-          .then(() => {
-            alert("berhasil")
-            handleClose()
-            window.location.reload();
-          })
-          .catch((error) => console.log(error));
-      };
+        dispatch(createMonth(data, setShow))
+    };
 
     return (
         <>

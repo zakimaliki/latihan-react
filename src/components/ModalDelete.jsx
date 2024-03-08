@@ -1,12 +1,13 @@
-import axios from 'axios';
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
+import { useDispatch } from 'react-redux';
+import deleteMonth from '../config/redux/action/deleteMonthAction';
 
 function ModalDelete({ id }) {
 
 
-
+    const dispatch = useDispatch()
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -15,14 +16,7 @@ function ModalDelete({ id }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios
-            .delete(`https://gofiber-production.up.railway.app/api/v1/month/delete/${id}`)
-            .then(() => {
-                alert("berhasil")
-                handleClose()
-                window.location.reload();
-            })
-            .catch((error) => console.log(error));
+        dispatch(deleteMonth(id, setShow))
     };
 
     return (

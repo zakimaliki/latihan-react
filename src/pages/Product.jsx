@@ -1,20 +1,18 @@
-import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import ModalCreate from '../components/ModalCreate'
 import ModalEdit from '../components/ModalEdit'
 import ModalDelete from '../components/ModalDelete'
 import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import getMonth from '../config/redux/action/monthAction'
 
 
 const Product = () => {
-    const [date, setDate] = useState([])
+    const dispatch = useDispatch()
+    const { month } = useSelector((state) => state.month)
     // const [num, setNum] = useState(1);
     useEffect(() => {
-        axios.get('https://gofiber-production.up.railway.app/api/v1/month/data').then((res) => {
-            setDate(res.data);
-        }).catch((err) => {
-            console.log(err);
-        })
+        dispatch(getMonth())
     }, [])
     return (
         <div className='container'>
@@ -31,7 +29,7 @@ const Product = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {date.map((item) => (
+                    {month.map((item) => (
                         <tr>
                             <td>{item.ID}</td>
                             <td>{item.Name}</td>
